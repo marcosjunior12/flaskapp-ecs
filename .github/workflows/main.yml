@@ -28,6 +28,6 @@ jobs:
       - name: Build docker and deploy ecs
         # uses: docker/build-push-action@v1
         run: |
-          sudo docker build -t marcosjr12/flaskapp:latest .
-          sudo docker image push marcosjr12/flaskapp:latest
+          docker build -t marcosjr12/flaskapp:latest .
+          docker image push marcosjr12/flaskapp:latest
           aws ecs update-service --cluster flaskcluster --service flaskapp-service --force-new-deployment --region us-east-2
