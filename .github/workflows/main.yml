@@ -23,9 +23,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: docker/build-push-action@v2
       # Runs a set of commands using the runners
-      - name: Run a multi-line script
+      - name: Build docker and deploy ecs
         run: |
           docker build -t marcosjr12/flaskapp:latest .
           docker image push marcosjr12/flaskapp:latest
