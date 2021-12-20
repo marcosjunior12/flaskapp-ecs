@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy ECR
+name: CI
 
 # Controls when the workflow will run
 on:
@@ -22,22 +22,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Check out code
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      uses: actions/checkout@v2
+      
       # Runs a set of commands using the runners
-
-    - name: Build docker and deploy ecs
-      run: |
-        docker login -u marcosjr12 -p Ju040798! docker.io
-        docker build -t marcosjr12/flaskapp:latest .
-        docker image push marcosjr12/flaskapp:latest
-
-    - name: AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-2
-      run: |
-        aws ecs update-service --cluster flaskcluster --service flaskapp-service --force-new-deployment --region us-east-2
+      - name: Build docker and deploy ecs
+        uses: actions/checkout@v2
+        # uses: docker/build-push-action@v1
+        run: |
+          docker login -u marcosjr12 -p Ju040798! docker.io
+          docker build -t marcosjr12/flaskapp:latest .
+          docker image push marcosjr12/flaskapp:latest
+          aws ecs update-service --cluster flaskcluster --service flaskapp-service --force-new-deployment --region us-east-2
