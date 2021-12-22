@@ -29,6 +29,7 @@ jobs:
           aws-region: us-east-2
 
       - name: Deploy ecr
+        uses: actions/checkout@v2
         run: |
           docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASS }} docker.io
           docker build -t marcosjr12/flaskapp:latest .
