@@ -21,6 +21,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
       - name: Aws Copnnect
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -29,7 +32,6 @@ jobs:
           aws-region: us-east-2
 
       - name: Deploy ecr
-        uses: actions/checkout@v2
         run: |
           docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASS }} docker.io
           docker build -t marcosjr12/flaskapp:latest .
